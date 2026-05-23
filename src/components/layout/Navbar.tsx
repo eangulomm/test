@@ -37,7 +37,7 @@ export function Navbar() {
              */}
             <div className="w-10 h-8 relative">
               <Image
-                src="/assets/images/logo.svg"
+                src="/assets/images/logo.png"
                 alt="Playland logo"
                 fill
                 className="object-contain"
