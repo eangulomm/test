@@ -1,144 +1,72 @@
-# 🎵 Playland — Frontend
+# Playland Test
 
-A cinematic, vinyl-collector music quiz experience for Playland.
-Built with **Next.js 14 · TypeScript · TailwindCSS · Framer Motion**.
+Proyecto frontend desarrollado como parte de mi portafolio personal. Consiste en una experiencia interactiva tipo quiz donde el usuario responde una serie de preguntas y obtiene como resultado una canción del álbum *Vessel* de Twenty One Pilots que refleja su personalidad emocional — junto con la opción de adquirir el vinilo correspondiente.
+
+---
+
+## ¿Qué es?
+
+Una aplicación web que combina una tienda de coleccionables musicales con una experiencia de usuario interactiva. El flujo principal es:
+
+**Hero → Quiz → Resultado personalizado → CTA de compra**
+
+El resultado varía según las respuestas del usuario gracias a un sistema de puntuación por canción implementado desde cero.
 
 ---
 
 ## Stack
 
-| Layer | Choice | Why |
-|-------|--------|-----|
-| Framework | **Next.js 14 (App Router)** | SSR, image optimization, file-based routing |
-| Styling | **TailwindCSS + CSS custom properties** | Utility-first with full design token control |
-| Animations | **CSS keyframes + Framer Motion** | CSS handles ambient floats; Framer for page transitions |
-| Language | **TypeScript** | Type-safe props, quiz data, and result scoring |
-| Images | **next/image** | Automatic WebP conversion, lazy loading |
+- **Next.js 14** — App Router, SSR, optimización de imágenes
+- **TypeScript** — tipado estricto en componentes, datos y lógica
+- **Tailwind CSS** — sistema de utilidades con tokens de diseño personalizados
+- **Framer Motion** — preparado para animaciones de transición
+- **CSS Keyframes** — animaciones de float, glow y fade para elementos decorativos
 
 ---
 
-## Getting Started
-
-```bash
-# 1. Install dependencies
-npm install
-
-# 2. Start dev server
-npm run dev
-
-# 3. Open in browser
-open http://localhost:3000
-```
-
----
-
-## Project Structure
+## Estructura del proyecto
 
 ```
 src/
-├── app/
-│   ├── layout.tsx          ← Root layout (Navbar, Footer, fonts, metadata)
-│   ├── page.tsx            ← Home page (QuizOrchestrator)
-│   └── vinilos/
-│       └── page.tsx        ← Vinyl catalog page
-│
+├── app/               # Rutas y layout global (Next.js App Router)
 ├── components/
-│   ├── layout/
-│   │   ├── AnnouncementBar.tsx   ← Scrolling top strip
-│   │   ├── Navbar.tsx            ← Sticky header with nav links
-│   │   └── Footer.tsx            ← Footer with link columns
-│   │
-│   ├── ui/
-│   │   ├── Button.tsx      ← Primary / outline / ghost variants
-│   │   ├── ProgressBar.tsx ← Quiz progress with glow fill
-│   │   └── Badge.tsx       ← Limited / Autographed / Price tags
-│   │
-│   ├── quiz/
-│   │   ├── QuizAnswerCard.tsx    ← Individual answer button
-│   │   └── QuizOrchestrator.tsx  ← State machine → routes to correct section
-│   │
-│   ├── product/
-│   │   └── ProductCard.tsx ← Vinyl product card for catalog
-│   │
-│   ├── animations/
-│   │   ├── FloatingElement.tsx   ← CSS float animation wrapper
-│   │   └── GlowBlob.tsx          ← Ambient radial glow blob
-│   │
-│   └── index.ts            ← Barrel exports
-│
-├── sections/
-│   ├── HeroSection.tsx     ← Full-bleed hero with headline + CTA
-│   ├── QuizSection.tsx     ← Question + answer grid
-│   └── ResultSection.tsx   ← Song result + vinyl buy CTA
-│
-├── styles/
-│   └── globals.css         ← Design tokens, base reset, utility classes
-│
-├── assets/
-│   └── README.md           ← Asset replacement guide
-│
-├── data/
-│   └── constants.ts        ← All editable content (nav, quiz, results)
-│
-├── lib/
-│   └── utils.ts            ← cn(), calculateResult(), helpers
-│
-└── hooks/
-    └── useQuiz.ts          ← Quiz state machine hook
+│   ├── layout/        # AnnouncementBar, Navbar, Footer
+│   ├── ui/            # Button, ProgressBar, Badge
+│   ├── quiz/          # QuizAnswerCard, QuizOrchestrator
+│   ├── product/       # ProductCard
+│   └── animations/    # FloatingElement, GlowBlob
+├── sections/          # HeroSection, QuizSection, ResultSection
+├── styles/            # globals.css con tokens y clases base
+├── data/              # constants.ts — todo el contenido editable
+├── lib/               # utils.ts — helpers y lógica de resultado
+└── hooks/             # useQuiz.ts — máquina de estados del quiz
 ```
 
 ---
 
-## Replacing Assets
+## Características
 
-See **`src/assets/README.md`** for the full asset checklist.
-
-Quick summary:
-- `public/assets/images/hero-bg.jpg` → Hero background photo
-- `public/assets/images/logo.svg` → Retro TV logo
-- `public/assets/images/decorative/*.png` → Floating vinyls, CDs, stickers
-- `public/assets/images/results/*.jpg` → Album covers per song
-- `public/assets/textures/grain.png` → Noise texture overlay
-
----
-
-## Editing Content
-
-All text, quiz questions, and product data live in one file:
-
-```
-src/data/constants.ts
-```
-
-Change quiz questions, add new results, update nav links — all without touching components.
+- Quiz de 7 preguntas con sistema de puntuación por canción
+- 12 resultados posibles (una por track del álbum Vessel)
+- Diseño responsive — mobile, tablet y desktop
+- Identidad visual oscura con paleta violeta/magenta, tipografía display y efectos de glow
+- Elementos decorativos flotantes con animación CSS
+- Arquitectura modular y escalable — componentes reutilizables con props limpias
+- Todo el contenido editable centralizado en un solo archivo (`data/constants.ts`)
 
 ---
 
-## Adding New Pages
+## Correr el proyecto
 
 ```bash
-src/app/
-  preventa/page.tsx      ← /preventa
-  exclusivos/page.tsx    ← /exclusivos
-  revista/page.tsx       ← /revista
+npm install
+npm run dev
 ```
 
-Each page uses the same `RootLayout` (Navbar + Footer) automatically.
+Abre [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## Extending the Quiz
+## Notas
 
-To add more questions:
-1. Add entries to `QUIZ_QUESTIONS` in `src/data/constants.ts`
-2. Add corresponding result entries to `QUIZ_RESULTS`
-3. Update `calculateResult()` in `src/lib/utils.ts` if needed
-
----
-
-## Build for Production
-
-```bash
-npm run build
-npm start
-```
+Los assets (portadas, renders de vinilo, imágenes decorativas) se reemplazan colocando los archivos en `public/assets/` — las rutas ya están conectadas en el código.
